@@ -23,9 +23,24 @@ const displayResult = res => {
               <h6 class="card-title">${element.slug}</h6>
               <p class="card-text">${element.brand}</p>
            </div>
+           <button onclick="loadDetail('${element.slug}')" class="btn btn-light rounded-2">detail</button>
          </div>
         `;
-        searchResult.appendChild(div);
-    })
+        searchResult.appendChild(div);   
+    });
+}
 
+const loadDetail = slug => {
+    // console.log(slug);
+    const url = `https://openapi.programming-hero.com/api/phone/${slug}`;
+    fetch(url)
+    .then(res => res.json())
+    .then(res => displayDetail(res));
+    
+
+}
+
+const displayDetail = (res) => {
+    console.log(res.data.mainFeatures)
+   
 }
