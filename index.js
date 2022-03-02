@@ -1,8 +1,9 @@
 const searchPhone = () => {
+    //search input text
     const searchField = document.getElementById('input-field');
     const searchText = searchField.value;
     searchField.value = '';
-
+    //error handle to white space
     if(searchText == ''){
         window.alert("Please write your favorite phone name");
     }
@@ -11,51 +12,49 @@ const searchPhone = () => {
         fetch(url)
           .then(res => res.json())
           .then(res => displayResult(res.data));
-    }
-    
-    
+    }    
 }
+
 const displayResult = res => {
+    // finding display output field
     const searchResult = document.getElementById('search-result');
     searchResult.textContent = '';
     let i = 0;
     res.forEach( element => {
-        console.log(element);
-        i++;
+        // console.log(element);
+         i++;
+            // chacking 20 itemes for output display
             if(i<21){
+                //create dynamic div
                 const div = document.createElement('div');
-            div.classList.add('cal');
-            div.innerHTML = `
-            <div class="card h-100 p-2">
-               <img src="${element.image}" class="card-img-top" alt="...">
-               <div class="card-body">
-                  <h5 class="card-title">${element.phone_name}</h5>
-                  <h6 class="card-title">${element.slug}</h6>
-                  <p class="card-text">${element.brand}</p>
-               </div>
-               <button onclick="loadDetail('${element.slug}')" class="btn btn-light rounded-2">detail</button>
-             </div>
+                div.classList.add('cal');
+                div.innerHTML = `
+                 <div class="card h-100 p-2">
+                    <img src="${element.image}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">${element.phone_name}</h5>
+                      <h6 class="card-title">${element.slug}</h6>
+                      <p class="card-text">${element.brand}</p>
+                    </div>
+                    <button onclick="loadDetail('${element.slug}')" class="btn btn-light rounded-2">detail</button>
+                 </div>
             `;
-            searchResult.appendChild(div);
-            }
-                 
+            searchResult.appendChild(div);            
+            }                 
     });
 }
 
-const loadDetail = slug => {
-    // console.log(slug);
-    
+//getting api result
+const loadDetail = slug => { 
     const url = `https://openapi.programming-hero.com/api/phone/${slug}`;
     fetch(url)
       .then(res => res.json())
       .then(res => displayDetail(res));
-    
-
 }
 
+//display api result
 const displayDetail = (res) => {
-    // console.log(res.data.mainFeatures);
-    
+    //finding product details div
     const detailField = document.getElementById('product-detail');
     detailField.textContent = '';
     const div = document.createElement('div');
@@ -83,10 +82,8 @@ const displayDetail = (res) => {
          <p class="card-text">NFC : ${res.data.others.NFC}</p>
          <p class="card-text">Radio : ${res.data.others.Radio}</p>
          <p class="card-text">USB : ${res.data.others.USB}</p></div>
-       
        </div>
     </div>
     `;
     detailField.appendChild(div);
-   
 }
