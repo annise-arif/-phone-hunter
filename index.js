@@ -4,7 +4,7 @@ const searchPhone = () => {
     searchField.value = '';
 
     if(searchText == ''){
-        window.alert("Please write a phone name");
+        window.alert("Please write your favorite phone name");
     }
     else{
         const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
@@ -18,22 +18,27 @@ const searchPhone = () => {
 const displayResult = res => {
     const searchResult = document.getElementById('search-result');
     searchResult.textContent = '';
-    res.forEach(element => {
-        // console.log(element);
-        const div = document.createElement('div');
-        div.classList.add('cal');
-        div.innerHTML = `
-        <div class="card h-100">
-           <img src="${element.image}" class="card-img-top" alt="...">
-           <div class="card-body">
-              <h5 class="card-title">${element.phone_name}</h5>
-              <h6 class="card-title">${element.slug}</h6>
-              <p class="card-text">${element.brand}</p>
-           </div>
-           <button onclick="loadDetail('${element.slug}')" class="btn btn-light rounded-2">detail</button>
-         </div>
-        `;
-        searchResult.appendChild(div);   
+    let i = 0;
+    res.forEach( element => {
+        console.log(element);
+        i++;
+            if(i<21){
+                const div = document.createElement('div');
+            div.classList.add('cal');
+            div.innerHTML = `
+            <div class="card h-100">
+               <img src="${element.image}" class="card-img-top" alt="...">
+               <div class="card-body">
+                  <h5 class="card-title">${element.phone_name}</h5>
+                  <h6 class="card-title">${element.slug}</h6>
+                  <p class="card-text">${element.brand}</p>
+               </div>
+               <button onclick="loadDetail('${element.slug}')" class="btn btn-light rounded-2">detail</button>
+             </div>
+            `;
+            searchResult.appendChild(div);
+            }
+                 
     });
 }
 
@@ -49,7 +54,8 @@ const loadDetail = slug => {
 }
 
 const displayDetail = (res) => {
-    // console.log(res.data.mainFeatures)
+    // console.log(res.data.mainFeatures);
+    
     const detailField = document.getElementById('product-detail');
     detailField.textContent = '';
     const div = document.createElement('div');
@@ -65,7 +71,19 @@ const displayDetail = (res) => {
        <p class="card-text"><b>Display size : </b>${res.data.mainFeatures.displaySize}</p>
        <p class="card-text"><b>Chip set : </b>${res.data.mainFeatures.chipSet}</p>
        <p class="card-text"><b>Memory : </b>${res.data.mainFeatures.memory}</p>
-       <p class="card-text"><b>Sensors : </b>${res.data.mainFeatures.sensors}</p>
+       <p class="card-text"><b>Sensor : </b>${res.data.mainFeatures.sensors[0]}</p>
+       <p class="card-text"><b>Sensor : </b>${res.data.mainFeatures.sensors[1]}</p>
+       <p class="card-text"><b>Sensor : </b>${res.data.mainFeatures.sensors[2]}</p>
+       <p class="card-text"><b>Sensor : </b>${res.data.mainFeatures.sensors[3]}</p>
+       <p class="card-text"><b>Sensor : </b>${res.data.mainFeatures.sensors[4]}</p>
+       <div class="card-text text-center"><b>Others : 
+         <p class="card-text">WLAN : $git{res.data.others.WLAN}</p>
+         <p class="card-text">Bluetooth : ${res.data.others.Bluetooth}</p>
+         <p class="card-text">GPS : ${res.data.others.GPS}</p>
+         <p class="card-text">NFC : ${res.data.others.NFC}</p>
+         <p class="card-text">Radio : ${res.data.others.Radio}</p>
+         <p class="card-text">USB : ${res.data.others.USB}</p></div>
+       
        </div>
     </div>
     `;
