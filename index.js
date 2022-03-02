@@ -26,7 +26,7 @@ const displayResult = res => {
                 const div = document.createElement('div');
             div.classList.add('cal');
             div.innerHTML = `
-            <div class="card h-100">
+            <div class="card h-100 p-2">
                <img src="${element.image}" class="card-img-top" alt="...">
                <div class="card-body">
                   <h5 class="card-title">${element.phone_name}</h5>
